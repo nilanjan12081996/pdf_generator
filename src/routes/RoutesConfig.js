@@ -4,6 +4,7 @@ import InsideLayout from '../ui/layout/InsideLayout.jsx';
 
 import Login from '../pages/Auth/Login.jsx';
 import Landing from '../pages/Landing/Landing.jsx';
+import Registration from '../pages/Auth/Registration.jsx';
 
 
 
@@ -13,6 +14,11 @@ const allRoutes = [
     path: '/',
     element: <OutsideLayout />,
     children: [{ index: true, element: <Login /> }],
+  },
+    {
+    path: '/register',
+    element: <OutsideLayout />,
+    children: [{ index: true, element: <Registration /> }],
   },
   {
     path: '/home',

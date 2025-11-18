@@ -92,7 +92,7 @@ nevigate("/home")
                   <div className="text-red-500 mb-1 text-center">
                     {errorMessage}
                   </div>
-                  <div className="flex justify-between mb-2">
+                  {/* <div className="flex justify-between mb-2">
                     <div className="flex items-center">
                       <div className="flex items-center gap-1">
                         <Checkbox />
@@ -109,6 +109,9 @@ nevigate("/home")
                         Forgot Password?
                       </Link>
                     </div>
+                  </div> */}
+                  <div className="flex justify-center">
+                  <p className="text-sm">Have any Account ? <Link to="/register" className="text-blue-700">Register</Link></p>  
                   </div>
                 </form>
               </div>

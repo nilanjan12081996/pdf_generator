@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { LoginImg, logo } from "../../assets/images/images";
+import {  logo } from "../../assets/images/images";
 import { FaEyeSlash, FcGoogle } from "../../assets/icons";
 import { Checkbox, Label, Select } from "flowbite-react";
 import { Link, useNavigate } from "react-router-dom";
@@ -95,28 +95,28 @@ const Registration = () => {
     }
   };
   return (
-    <div className="my-0 lg:my-0 px-4 lg:mx-0 flex justify-center items-center wrapper_bg_area  bg-black">
+    <div className="my-0 lg:my-0 px-4 lg:mx-0 flex justify-center items-center wrapper_bg_area  bg-white">
       <div className="w-full my-0 mx-auto">
         <div className="lg:flex lg:h-screen py-8 lg:py-0">
-          <div className="w-full lg:w-6/12 flex justify-center items-center bg-black">
-            <div className="w-full lg:w-7/12">
+          <div className="w-full lg:w-6/12 mx-auto bg-white py-10">
+            <div className="w-full lg:w-full">
               <div className="text-center mb-2 lg:mb-5">
                 <img src={logo} alt="logo" className="inline-block w-4/12" />
               </div>
-              <h1 className="text-center font-medium text-xl lg:text-[25px] leading-[45px] text-white pb-4 lg:pb-6">
+              <h1 className="text-center font-medium text-xl lg:text-[25px] leading-[45px] text-black pb-4 lg:pb-0">
                 Sign Up
               </h1>
               {!sendOtp && (
                 <div>
                   <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="mb-2">
-                      <Label className="text-[15px] text-white font-normal pb-1 block">
+                    <div className="mb-0">
+                      <Label className="text-[15px] text-black font-normal pb-1 block">
                         Choose User Type
                       </Label>
                       <Select
                         {...register("userType")}
                         required
-                        className="text-[#888888] py-[12px]"
+                        className="text-[#888888] pb-[12px]"
                       >
                         <option>Choose User Type</option>
                         {usersRole?.data?.map((userrole) => {
@@ -136,7 +136,7 @@ const Registration = () => {
                     {userType !== "Wholesaler" && (
                       <>
                         <div className="mb-3 ">
-                          <Label className="text-[15px] text-white font-normal pb-2 block">
+                          <Label className="text-[15px] text-black font-normal pb-1 block">
                             Full Name
                           </Label>
                           <input
@@ -158,7 +158,7 @@ const Registration = () => {
                         </div>
 
                         <div className="mb-3">
-                          <Label className="text-[15px] text-white font-normal pb-2 block">
+                          <Label className="text-[15px] text-black font-normal pb-1 block">
                             Password
                           </Label>
                           <input
@@ -180,7 +180,7 @@ const Registration = () => {
                     {userType === "Wholesaler" && (
                       <>
                         <div className="mb-3 ">
-                          <Label className="text-[15px] text-white font-normal pb-2 block">
+                          <Label className="text-[15px] text-black font-normal pb-1 block">
                             User Name
                           </Label>
                           <input
@@ -201,7 +201,7 @@ const Registration = () => {
                           )}
                         </div>
                         <div className="mb-3">
-                          <Label className="text-[15px] text-white font-normal pb-2 block">
+                          <Label className="text-[15px] text-black font-normal pb-1 block">
                             Password
                           </Label>
                           <input
@@ -218,7 +218,7 @@ const Registration = () => {
                           )}
                         </div>
                         <div className="mb-3">
-                          <Label className="text-[15px] text-white font-normal pb-2 block">
+                          <Label className="text-[15px] text-black font-normal pb-1 block">
                             Company Name
                           </Label>
                           <input
@@ -235,8 +235,8 @@ const Registration = () => {
                           )}
                         </div>
 
-                        <div className="mb-3">
-                          <Label className="text-[15px] text-white font-normal pb-2 block">
+                        <div className="mb-0">
+                          <Label className="text-[15px] text-black font-normal pb-1 block">
                             Email
                           </Label>
                           <input
@@ -252,8 +252,8 @@ const Registration = () => {
                             </span>
                           )}
                         </div>
-                        <div className="mb-3">
-                          <Label className="text-[15px] text-white font-normal pb-2 block">
+                        <div className="mb-0">
+                          <Label className="text-[15px] text-black font-normal pb-1 block">
                             Phone
                           </Label>
                           <input
@@ -426,12 +426,12 @@ const Registration = () => {
               )}
             </div>
           </div>
-          <div
+          {/* <div
             className="w-6/12 bg-cover hidden lg:block"
             style={{ backgroundImage: `url("${LoginImg}")` }}
           >
             &nbsp;
-          </div>
+          </div> */}
         </div>
       </div>
       {/* {openModal && (

@@ -6,7 +6,7 @@ import SidebarLinkGroup from "../layout/SidebarLinkGroup";
 import { logo } from '../../assets/images/images';
 
 import { AiFillSetting, AiFillTag, AiFillTags, AiOutlineDashboard, AiOutlineLogout, AiOutlineNotification, AiOutlineUser, BiLineChart, BiLineChartDown, BiSolidBook, BsPersonWorkspace, BsViewStacked, FiHome, MdManageAccounts, MdOutlineShoppingCartCheckout, MdSpaceDashboard, MdViewStream, PiChatsTeardropBold, PiClipboardTextBold, RiCoupon2Fill, RiCouponLine, RiUserVoiceFill, RxDashboard } from "../../assets/icons/index";
-import { FaCircle, FaFirstOrderAlt, FaLink } from 'react-icons/fa';
+import { FaCircle, FaFirstOrderAlt, FaLink, FaShopify } from 'react-icons/fa';
 import getCookie from '../../pages/Auth/getCookie';
 import { refreshToken } from '../../reducers/AuthSlice';
 import { useDispatch } from 'react-redux';
@@ -26,8 +26,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const sidebar = useRef<any>(null);
 
   const storedSidebarExpanded = localStorage.getItem('sidebar-expanded');
+  // const [sidebarExpanded, setSidebarExpanded] = useState(
+  //   storedSidebarExpanded === null ? false : storedSidebarExpanded === 'true'
+  // );
   const [sidebarExpanded, setSidebarExpanded] = useState(
-    storedSidebarExpanded === null ? false : storedSidebarExpanded === 'true'
+    localStorage.getItem('sidebar-expanded') !== 'false'
   );
   const dispatch=useDispatch()
   const [isHovered, setIsHovered] = useState(false);
@@ -89,7 +92,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     <aside
       ref={sidebar}
       style={{zIndex:1}}
-      className={`sidebar_area left-0 top-0 lg:top-[50px] z-9999 flex rounded-0 flex-col overflow-y-hidden bg-black duration-300 ease-linear absolute h-full lg:h-full shadow-xl ${
+      className={`sidebar_area left-0 top-0 lg:top-[50px] z-9999 flex rounded-0 flex-col overflow-y-hidden bg-white duration-300 ease-linear absolute h-full lg:h-screen shadow-xl ${
         sidebarOpen ? '-translate-x-full lg:static lg:w-24 lg:translate-x-0 ' : 'lg:translate-x-0 lg:static'
       }`}
       onMouseEnter={onHoverOpenSidebar}
@@ -128,27 +131,27 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
               <li>
                 <NavLink
-                  to="/chats"
+                  to="/home"
                   className={`group relative flex items-center gap-2 rounded-lg ${ sidebarOpen ? 'justify-center text-base py-3 px-0' : 'justify-start text-sm py-3 px-5' } font-normal text-[#C8C6C6] duration-300 ease-in-out hover:bg-graydark mb-2 ${
-                    pathname.includes('chats') &&
+                    pathname.includes('home') &&
                     'bg-graydark dark:bg-meta-4'
                   }`}
                 
                 >
                    { sidebarOpen ? 
                     <>
-                    <PiChatsTeardropBold className='text-xl' />
+                    <FaShopify  className='text-xl' />
                     </>
                     :
                     <>
-                    <PiChatsTeardropBold className='text-xl' />
-                    Chats
+                    <FaShopify className='text-xl' />
+                    Shopify
                     </>
                   }
                 </NavLink>
               </li>
 
-              <li>
+              {/* <li>
                 <NavLink
                   to="/my-characters"
                   className={`group relative flex items-center gap-2 rounded-lg ${ sidebarOpen ? 'justify-center text-base py-3 px-0' : 'justify-start text-sm py-3 px-5' } font-normal text-sm text-[#C8C6C6] duration-300 ease-in-out hover:bg-graydark mb-2 ${
@@ -168,9 +171,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     </>
                   }
                 </NavLink>
-              </li>
+              </li> */}
 
-              <li>
+              {/* <li>
                 <NavLink
                   to="/backstory"
                   className={`group relative flex items-center gap-2 rounded-lg ${ sidebarOpen ? 'justify-center text-base py-3 px-0' : 'justify-start text-sm py-3 px-5' } font-normal text-sm text-[#C8C6C6] duration-300 ease-in-out hover:bg-graydark mb-2 ${
@@ -190,7 +193,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   }
                 </NavLink>
               </li>      
-              
+               */}
 
             </ul>
           </div>

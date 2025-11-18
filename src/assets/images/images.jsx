@@ -1,4 +1,4 @@
-import logo from "../imagesource/logo.png";
+import logo from "../imagesource/PDFgenerator_logo.png";
 import userFace from "../imagesource/user/user-01.png";
 import logoMain from "../imagesource/logo_main.png";
 import rightArrow from "../imagesource/right-arrow.png";

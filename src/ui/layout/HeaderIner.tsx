@@ -29,21 +29,21 @@ function Header(props: {
   };
     
   return (
-    <div className="z-10 sticky top-0 z-999 flex ml-0 lg:rounded-lg lg:mb-6 bg-[#170A2C] shadow-xl">
+    <div className="z-10 sticky top-0 z-999 flex ml-0 lg:rounded-lg lg:mb-6 bg-[#fafafc] shadow-xl">
         <div className="flex flex-grow items-center justify-between px-6 py-2 shadow-2">
 
             <div className="flex items-center">
                 {/* Logo area start here */}
-                <div className="mr-8">
+                {/* <div className="mr-8">
                     <Link to="/">
                     <img src={logo} className="my-0" />
                     </Link>
-                </div>
+                </div> */}
                 {/* Logo area ends here */}
             </div>
 
             {/* Main menu start here */}
-            <div className="menu_section pb-0">
+            {/* <div className="menu_section pb-0">
                 <div className="main_menu">
                 <Navbar fluid rounded className="bg-transparent pt-0 pb-0">
                     <div className="flex md:order-2 text-white">
@@ -79,7 +79,7 @@ function Header(props: {
                     </Navbar.Collapse>
                 </Navbar>
                 </div>
-            </div>
+            </div> */}
             {/* Main menu ends here */}
 
             {/* <div className="hidden sm:block"> &nbsp;</div> */}

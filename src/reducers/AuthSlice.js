@@ -110,7 +110,7 @@ export const login = createAsyncThunk(
   'auth/login',
   async (userInput, { rejectWithValue }) => {
     try {
-      const response = await api.post('user/auth/login', userInput);
+      const response = await api.post('api/user/login', userInput);
       if (response?.data?.status_code === 200) {
         return response.data;
       } else {

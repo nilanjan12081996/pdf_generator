@@ -29,27 +29,27 @@ const Landing = () => {
           </p>
         </div>
       </div> */}
-      <div className="bg-[#f9f9f9] lg:w-8/12 mx-auto p-4 rounded-md border border-[#c7c7c7] mb-10">
+      {/* <div className="bg-[#f9f9f9] lg:w-8/12 mx-auto p-4 rounded-md border border-[#c7c7c7] mb-10">
         <div className="lg:flex items-center gap-3">
           <Select className="lg:w-8/12 mb-2 lg:mb-0">
             <option>Select Store</option>
           </Select>
-          {/* <button className="bg-[#1f2937] text-white px-4 py-2 rounded-lg hover:bg-[#374151] lg:w-4/12 text-sm">
-            Load Saved Operation
-          </button> */}
+      
         </div>
-      </div>
+      </div> */}
       <div className="bg-[#f9f9f9] lg:w-8/12 mx-auto p-4 rounded-md border border-[#c7c7c7] mb-8 lg:mb-20">
-        <h2 className="text-base font-semibold pb-4 text-center">
-          Upload File
+        <h2 className="text-base font-semibold pb-4 text-left">
+          Link
         </h2>
-        <FileInput id="file-upload" />
+        <TextInput id="file-upload"
+        placeholder="Paste Link"
+        />
         <div className="lg:flex items-center mt-4">
         </div>
       </div>
       <div className="mb-10 flex justify-center items-center">
         <button className="bg-[#1f2937] text-white text-[18px] font-medium px-4 py-2 rounded-lg hover:bg-[#374151] w-full lg:w-4/12">
-          Create My Products!
+         Submit
         </button>
       </div>
     </div>
