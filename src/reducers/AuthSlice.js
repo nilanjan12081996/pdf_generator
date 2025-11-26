@@ -28,7 +28,7 @@ export const registerUser = createAsyncThunk(
   'user/register',
   async (userInput, { rejectWithValue }) => {
     try {
-      const response = await api.post('user/auth/register', userInput);
+      const response = await api.post('api/user/register', userInput);
       if (response?.data?.status_code === 201) {
         return response.data;
       } else {
@@ -302,7 +302,7 @@ const authSlice = createSlice({
         state.loading = false;
         state.message = payload;
         sessionStorage.setItem(
-          'mtaToken',
+          'podToken',
           JSON.stringify({ token: payload?.token })
         );
 

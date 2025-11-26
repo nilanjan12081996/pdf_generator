@@ -145,7 +145,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     :
                     <>
                     <FaShopify className='text-xl' />
-                    Shopify
+                   Report
                     </>
                   }
                 </NavLink>
