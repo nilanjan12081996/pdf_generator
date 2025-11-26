@@ -10,7 +10,7 @@ import { FaCircle, FaFirstOrderAlt, FaLink, FaShopify } from 'react-icons/fa';
 import getCookie from '../../pages/Auth/getCookie';
 import { refreshToken } from '../../reducers/AuthSlice';
 import { useDispatch } from 'react-redux';
-import { MdElectricalServices } from 'react-icons/md';
+import { MdElectricalServices, MdHistory } from 'react-icons/md';
 import { AiFillProduct, AiOutlineUsergroupAdd } from 'react-icons/ai';
 import { TbReportAnalytics } from 'react-icons/tb';
 
@@ -105,7 +105,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
           { sidebarOpen ? 
             <>
               <div className="text-center mb-8">
-                Small Logo
+               
               </div>
             </>
             :
@@ -152,27 +152,27 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 </NavLink>
               </li>
 
-              {/* <li>
+              <li>
                 <NavLink
-                  to="/my-characters"
+                  to="/history"
                   className={`group relative flex items-center gap-2 rounded-lg ${ sidebarOpen ? 'justify-center text-base py-3 px-0' : 'justify-start text-sm py-3 px-5' } font-normal text-sm text-[#C8C6C6] duration-300 ease-in-out hover:bg-graydark mb-2 ${
-                    pathname.includes('my-characters') &&
+                    pathname.includes('history') &&
                     'bg-graydark dark:bg-meta-4'
                   }`}
                  
                 >
                    { sidebarOpen ? 
                     <>
-                    <AiOutlineUsergroupAdd className='text-xl' />
+                    <MdHistory className='text-xl' />
                     </>
                     :
                     <>
-                    <AiOutlineUsergroupAdd className='text-xl' />
-                    My Characters
+                    <MdHistory className='text-xl' />
+                   Report History
                     </>
                   }
                 </NavLink>
-              </li> */}
+              </li>
 
               {/* <li>
                 <NavLink
