@@ -22,7 +22,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { checkPdfStatus, generatePDF, historyGenerate, reportGenerate } from "../../reducers/GenaretePdfSlice";
-
+import { FaFilePdf } from "react-icons/fa";
 
 const columnHelper = createColumnHelper();
 
@@ -110,8 +110,8 @@ const Landing = () => {
                   if (res.payload.status === 'success') {
                     setShowDowanloadBtn(true);
                     dispatch(historyGenerate({
-                      report_url:res?.payload?.download_url,
-                      preview_url:res?.payload?.preview_url
+                      report_url: res?.payload?.download_url,
+                      preview_url: res?.payload?.preview_url
                     }))
                   }
                 });
@@ -182,6 +182,7 @@ const Landing = () => {
             {/* <div className="flex gap-3"> */}
             <div>
               <TextInput id="file-upload"
+                type="password"
                 placeholder="Shopify Access Token"
                 className="width-full"
                 {...register("accessToken", { required: "Access Token Required" })}
@@ -220,23 +221,36 @@ const Landing = () => {
           </div>
         </form>
         {showDowanloadBtn && (
-          <a href={downloadUrl} download="AI_Report.pdf">
-            <button
-              style={{
-                padding: "10px 20px",
-                background: "#059669",
-                color: "white",
-                borderRadius: "6px",
-                cursor: "pointer",
-                border: "none",
-                fontSize: "16px",
-                marginTop: "10px",
-              }}
-            >
-              Download PDF
-            </button>
-          </a>
+          <div className="text-center mb-4">
+            <p className="text-md font-medium text-gray-700 mb-1">
+              Your report has been successfully generated. Click below to download the PDF.
+            </p>
+            <div className="flex justify-center">
+              <a href={downloadUrl} download="AI_Report.pdf">
+                <button
+                  className="
+                  flex justify-center items-center gap-2
+                  px-5 py-2.5
+                  bg-emerald-600 
+                  text-white
+                  rounded-lg
+                  text-[16px]
+                  font-medium
+                  mt-3
+                  hover:bg-emerald-700
+                  transition-all duration-200
+                  shadow-sm
+                  hover:shadow-md
+                "
+                >
+                  Download PDF
+                  <span className="text-2xl"><FaFilePdf /></span>
+                </button>
+              </a>
+            </div>
+          </div>
         )}
+
         <div className="flex justify-end">
           <button className="mb-4 float-right bg-[#1f2937] text-white text-[18px] font-medium px-4 py-2 rounded-lg hover:bg-[#374151]">
             Create Report
