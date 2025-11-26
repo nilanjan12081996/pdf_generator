@@ -8,6 +8,7 @@ import ContactSlice from '../reducers/ContactSlice';
 import ServiceProviderSlice from '../reducers/ServiceProviderSlice';
 import WholeSalerSlice from '../reducers/WholeSalerSlice';
 import CreateCharacterSlice from '../reducers/CreateCharacterSlice';
+import GenaretePdfSlice from '../reducers/GenaretePdfSlice';
 
 const store = configureStore({
   reducer: {
@@ -19,7 +20,8 @@ const store = configureStore({
     contact: ContactSlice,
     serviceProviders: ServiceProviderSlice,
     wholeSalers: WholeSalerSlice,
-    createcharacter:CreateCharacterSlice
+    createcharacter:CreateCharacterSlice,
+    generatePdf:GenaretePdfSlice
   },
   devTools: import.meta.env.DEV,
 });

@@ -5,6 +5,7 @@ import InsideLayout from '../ui/layout/InsideLayout.jsx';
 import Login from '../pages/Auth/Login.jsx';
 import Landing from '../pages/Landing/Landing.jsx';
 import Registration from '../pages/Auth/Registration.jsx';
+import GenerateReport from '../pages/GenerateReport/GenerateReport.jsx';
 
 
 
@@ -15,7 +16,7 @@ const allRoutes = [
     element: <OutsideLayout />,
     children: [{ index: true, element: <Login /> }],
   },
-    {
+  {
     path: '/register',
     element: <OutsideLayout />,
     children: [{ index: true, element: <Registration /> }],
@@ -24,6 +25,12 @@ const allRoutes = [
     path: '/home',
     element: <InsideLayout />,
     children: [{ index: true, element: <Landing /> }],
+  },
+
+  {
+    path: '/generate-report',
+    element: <InsideLayout />,
+    children: [{ index: true, element: <GenerateReport /> }],
   },
 
   {
