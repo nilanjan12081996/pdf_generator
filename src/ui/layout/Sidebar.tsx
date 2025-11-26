@@ -12,6 +12,7 @@ import { refreshToken } from '../../reducers/AuthSlice';
 import { useDispatch } from 'react-redux';
 import { MdElectricalServices } from 'react-icons/md';
 import { AiFillProduct, AiOutlineUsergroupAdd } from 'react-icons/ai';
+import { TbReportAnalytics } from 'react-icons/tb';
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -140,11 +141,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 >
                    { sidebarOpen ? 
                     <>
-                    <FaShopify  className='text-xl' />
+                    <TbReportAnalytics  className='text-xl' />
                     </>
                     :
                     <>
-                    <FaShopify className='text-xl' />
+                    <TbReportAnalytics className='text-xl' />
                    Report
                     </>
                   }
