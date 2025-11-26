@@ -47,6 +47,8 @@ const Landing = () => {
   const data = useMemo(() => defaultData, []);
   const [showDowanloadBtn, setShowDowanloadBtn] = useState(false)
   const [preview_url, setPreviewUrl] = useState()
+  const [submitLoading, setSubmitLoading] = useState(false);
+
 
   const columns = useMemo(
     () => [
@@ -91,6 +93,7 @@ const Landing = () => {
   } = useForm();
 
   const onSubmit = (data) => {
+    setSubmitLoading(true);
     dispatch(reportGenerate(data)).then((res) => {
       console.log("res", res);
       if (res?.payload?.status_code === 200) {
@@ -114,9 +117,12 @@ const Landing = () => {
                       preview_url: res?.payload?.preview_url
                     }))
                   }
+                   setSubmitLoading(false);
                 });
             }, 5000);
           })
+      }else{
+        setSubmitLoading(false); 
       }
 
     })
@@ -212,11 +218,11 @@ const Landing = () => {
           </button> */}
             <button
               type="submit"
-              disabled={loading}
+              disabled={submitLoading}
               className={`bg-[#1f2937] text-white text-[18px] font-medium px-4 py-2 rounded-lg w-full lg:w-4/12
-            ${loading ? "opacity-60 cursor-not-allowed" : "hover:bg-[#374151]"}`}
+            ${submitLoading ? "opacity-60 cursor-not-allowed" : "hover:bg-[#374151]"}`}
             >
-              {loading ? "Generating..." : "Generate Report"}
+              {submitLoading ? "Generating..." : "Generate Report"}
             </button>
           </div>
         </form>
@@ -251,7 +257,7 @@ const Landing = () => {
           </div>
         )}
 
-        <div className="flex justify-end">
+        {/* <div className="flex justify-end">
           <button className="mb-4 float-right bg-[#1f2937] text-white text-[18px] font-medium px-4 py-2 rounded-lg hover:bg-[#374151]">
             Create Report
           </button>
@@ -291,7 +297,7 @@ const Landing = () => {
               ))}
             </tbody>
           </table>
-        </div>
+        </div> */}
       </div>
 
     </>
