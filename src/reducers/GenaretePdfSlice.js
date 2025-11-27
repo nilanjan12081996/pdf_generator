@@ -9,17 +9,9 @@ const API_KEY = import.meta.env.VITE_PDFMONKEY_API_KEY;;
 
 export const generatePDF = createAsyncThunk(
     "pdf/generate",
-    async (templateId, { rejectWithValue }) => {
+    async (userInput, { rejectWithValue }) => {
         try {
-            const payload = {
-                document_template_id: templateId,
-                status: "pending",
-                payload: dummyPdfData,
-            };
-
-            const response = await axios.post(
-                `${API_URL}/documents`,
-                { document: payload },
+            const response = await axios.post(`${API_URL}/documents`,userInput,
                 {
                     headers: {
                         Authorization: `Bearer ${API_KEY}`,
@@ -58,19 +50,55 @@ export const checkPdfStatus = createAsyncThunk(
     }
 );
 
-export const reportGenerate=createAsyncThunk(
-    "reportGenerate",
-     async (userInput, { rejectWithValue }) => {
-        try {
-            const response = await api.post(`api/analytics/get-analytics`,userInput);
+// export const reportGenerate=createAsyncThunk(
+//     "reportGenerate",
+//      async (userInput, { rejectWithValue }) => {
+//         try {
+//             const response = await api.post(`api/analytics/get-analytics`,userInput);
 
 
-            return response.data;
-        } catch (error) {
-            return rejectWithValue(error.response?.data || "Failed to check status");
-        }
+//             return response.data;
+//         } catch (error) {
+//             return rejectWithValue(error.response?.data || "Failed to check status");
+//         }
+//     }
+// )
+
+
+export const reportGenerate = createAsyncThunk(
+  'reportGenerate',
+  async (userInput, { rejectWithValue }) => {
+    try {
+      const response = await api.post('api/analytics/get-analytics',userInput);
+      if (response?.data?.status_code === 200) {
+        return response.data;
+      } else {
+        return rejectWithValue(response.data);
+      }
+    } catch (err) {
+      let errors = errorHandler(err);
+      return rejectWithValue(errors);
     }
-)
+  }
+);
+
+export const historyGenerate = createAsyncThunk(
+  'historyGenerate',
+  async (userInput, { rejectWithValue }) => {
+    try {
+      const response = await api.post('api/analytics/add-history',userInput);
+      if (response?.data?.status_code === 201) {
+        return response.data;
+      } else {
+        return rejectWithValue(response.data);
+      }
+    } catch (err) {
+      let errors = errorHandler(err);
+      return rejectWithValue(errors);
+    }
+  }
+);
+
 
 
 const initialState = {
@@ -79,7 +107,8 @@ const initialState = {
     downloadUrl: null,
     status: null,
     error: null,
-    reportData:[]
+    reportData:[],
+    hist:""
 };
 
 
@@ -103,7 +132,7 @@ const GenaretePdfSlice = createSlice({
             })
             .addCase(generatePDF.fulfilled, (state, { payload }) => {
                 state.loading = false;
-                state.documentId = payload.id;
+                state.documentId = payload;
             })
             .addCase(generatePDF.rejected, (state, { payload }) => {
                 state.loading = false;
@@ -135,6 +164,19 @@ const GenaretePdfSlice = createSlice({
                 state.error=false
             })
             .addCase(reportGenerate.rejected,(state,{payload})=>{
+                state.loading=false
+                state.error=payload
+            })
+                .addCase(historyGenerate.pending,(state)=>{
+                state.loading=true
+                
+            })
+            .addCase(historyGenerate.fulfilled,(state,{payload})=>{
+                state.loading=false
+                state.hist=payload
+                state.error=false
+            })
+            .addCase(historyGenerate.rejected,(state,{payload})=>{
                 state.loading=false
                 state.error=payload
             })
