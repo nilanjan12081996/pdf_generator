@@ -32,7 +32,13 @@ const History=()=>{
         console.log("respagination",res);
         
         if(res?.status_code===200){
-            setPaginationData(res.data?.pagination);
+            const p = res.data?.pagination;
+            setPaginationData({
+            total: p.totalCount,
+          pages: p.totalPages,
+          page: p.currentPage,
+          limit: p.pageSize,
+            });
         }
     })
   },[dispatch,currentPage, pageSize])
