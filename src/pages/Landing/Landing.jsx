@@ -19,6 +19,9 @@ import {
   flexRender,
   createColumnHelper,
 } from "@tanstack/react-table";
+import { useDispatch, useSelector } from "react-redux";
+import { useForm } from "react-hook-form";
+import { reportGenerate } from "../../reducers/GenaretePdfSlice";
 
 
 const columnHelper = createColumnHelper();
@@ -39,7 +42,8 @@ const defaultData = [
 ];
 
 const Landing = () => {
-
+  const{loading,reportData}=useSelector((state)=>state?.generatePdf)
+  const dispatch=useDispatch()
   const data = useMemo(() => defaultData, []);
 
   const columns = useMemo(
@@ -77,6 +81,19 @@ const Landing = () => {
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
+
+    const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit=(data)=>{
+    dispatch(reportGenerate(data)).then((res)=>{
+      console.log("res",res);
+      
+    })
+  }
   return (
     <>
 
@@ -103,34 +120,78 @@ const Landing = () => {
       
         </div>
       </div> */}
+        <form onSubmit={handleSubmit(onSubmit)}>
         <div className="bg-[#f9f9f9] lg:w-8/12 mx-auto p-4 rounded-md border border-[#c7c7c7] mb-8 lg:mb-20">
           <h2 className="text-base font-semibold pb-4 text-left">
-            Shopify Key
+            Shopify Store URL
           </h2>
-          <div className="flex gap-3">
+          {/* <div className="flex gap-3"> */}
             <div>
               <TextInput id="file-upload"
-                placeholder="Shopify Key"
+                placeholder="Shopify Store URL"
                 className="width-full"
+                {...register("storeUrl",{required:"Store URL required"})}
               />
-
+              {
+                errors.storeUrl&&(
+                  <span className="text-red-500">
+                    {errors.storeUrl.message}
+                    </span>
+                )
+              }
             </div>
-            <div>
+            {/* <div>
 
 
               <button className="bg-[#1f2937] text-white text-[18px] font-medium px-4 py-2 rounded-lg hover:bg-[#374151]">
                 Edit
               </button>
+            </div> */}
+          {/* </div> */}
+
+          <h2 className="text-base font-semibold pb-4 text-left mt-4">
+            Shopify Access Token
+          </h2>
+          {/* <div className="flex gap-3"> */}
+            <div>
+              <TextInput id="file-upload"
+                placeholder="Shopify Access Token"
+                className="width-full"
+                {...register("accessToken",{required:"Access Token Required"})}
+              />
+               {
+                errors.accessToken&&(
+                  <span className="text-red-500">
+                    {errors.accessToken.message}
+                    </span>
+                )
+              }
             </div>
-          </div>
+            {/* <div>
+
+
+              <button className="bg-[#1f2937] text-white text-[18px] font-medium px-4 py-2 rounded-lg hover:bg-[#374151]">
+                Edit
+              </button>
+            </div> */}
+          {/* </div> */}
 
 
         </div>
         <div className="mb-10 flex justify-center items-center">
-          <button className="bg-[#1f2937] text-white text-[18px] font-medium px-4 py-2 rounded-lg hover:bg-[#374151] w-full lg:w-4/12">
-            Submit
-          </button>
+          {/* <button type="submit" className="bg-[#1f2937] text-white text-[18px] font-medium px-4 py-2 rounded-lg hover:bg-[#374151] w-full lg:w-4/12">
+            Generate Report
+          </button> */}
+          <button
+          type="submit"
+          disabled={loading}
+          className={`bg-[#1f2937] text-white text-[18px] font-medium px-4 py-2 rounded-lg w-full lg:w-4/12
+            ${loading ? "opacity-60 cursor-not-allowed" : "hover:bg-[#374151]"}`}
+        >
+          {loading ? "Generating..." : "Generate Report"}
+        </button>
         </div>
+        </form>
         <div className="flex justify-end">
           <button className="mb-4 float-right bg-[#1f2937] text-white text-[18px] font-medium px-4 py-2 rounded-lg hover:bg-[#374151]">
             Create Report

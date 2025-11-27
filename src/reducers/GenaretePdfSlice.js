@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { dummyPdfData } from "../Constants/pdfDummyData";
+import api from "../stores/api";
 
 
 const API_URL = "https://api.pdfmonkey.io/api/v1";
@@ -57,6 +58,20 @@ export const checkPdfStatus = createAsyncThunk(
     }
 );
 
+export const reportGenerate=createAsyncThunk(
+    "reportGenerate",
+     async (userInput, { rejectWithValue }) => {
+        try {
+            const response = await api.post(`api/analytics/get-analytics`,userInput);
+
+
+            return response.data;
+        } catch (error) {
+            return rejectWithValue(error.response?.data || "Failed to check status");
+        }
+    }
+)
+
 
 const initialState = {
     loading: false,
@@ -64,6 +79,7 @@ const initialState = {
     downloadUrl: null,
     status: null,
     error: null,
+    reportData:[]
 };
 
 
@@ -108,7 +124,21 @@ const GenaretePdfSlice = createSlice({
             .addCase(checkPdfStatus.rejected, (state, { payload }) => {
                 state.loading = false;
                 state.error = payload;
-            });
+            })
+            .addCase(reportGenerate.pending,(state)=>{
+                state.loading=true
+                
+            })
+            .addCase(reportGenerate.fulfilled,(state,{payload})=>{
+                state.loading=false
+                state.reportData=payload
+                state.error=false
+            })
+            .addCase(reportGenerate.rejected,(state,{payload})=>{
+                state.loading=false
+                state.error=payload
+            })
+            ;
     },
 });
 
