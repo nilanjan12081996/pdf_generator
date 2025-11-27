@@ -100,6 +100,24 @@ export const historyGenerate = createAsyncThunk(
 );
 
 
+export const getHistory = createAsyncThunk(
+  'getHistory',
+  async ({limit,page}, { rejectWithValue }) => {
+    try {
+      const response = await api.get(`api/analytics/report-list?page=${page}&limit=${limit}`);
+      if (response?.data?.status_code === 201) {
+        return response.data;
+      } else {
+        return rejectWithValue(response.data);
+      }
+    } catch (err) {
+      let errors = errorHandler(err);
+      return rejectWithValue(errors);
+    }
+  }
+);
+
+
 
 const initialState = {
     loading: false,
@@ -108,7 +126,8 @@ const initialState = {
     status: null,
     error: null,
     reportData:[],
-    hist:""
+    hist:"",
+    allHist:[]
 };
 
 
@@ -177,6 +196,19 @@ const GenaretePdfSlice = createSlice({
                 state.error=false
             })
             .addCase(historyGenerate.rejected,(state,{payload})=>{
+                state.loading=false
+                state.error=payload
+            })
+                .addCase(getHistory.pending,(state)=>{
+                state.loading=true
+                
+            })
+            .addCase(getHistory.fulfilled,(state,{payload})=>{
+                state.loading=false
+                state.allHist=payload
+                state.error=false
+            })
+            .addCase(getHistory.rejected,(state,{payload})=>{
                 state.loading=false
                 state.error=payload
             })

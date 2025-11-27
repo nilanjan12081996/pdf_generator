@@ -149,7 +149,7 @@ const TanStackTable = ({ data, columns }) => {
       <table className="border border-gray-700 w-full text-left">
         <thead className="bg-black">
           {table.getHeaderGroups().map((headerGroup) => (
-            <tr className="leading-8" key={headerGroup.id}>
+            <tr className="leading-8" key={headerGroup._id}>
               {headerGroup.headers.map((header) => (
                 <th
                   key={header.id}
@@ -185,7 +185,7 @@ const TanStackTable = ({ data, columns }) => {
               </tr>
             ))
           ) : (
-            <tr className="text-center h-32">
+            <tr className="text-center h-32 text-black">
               <td colSpan={12}>No Record Found!</td>
             </tr>
           )}

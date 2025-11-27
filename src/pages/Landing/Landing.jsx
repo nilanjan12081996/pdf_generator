@@ -54,7 +54,7 @@ const Landing = () => {
       //   header: "ID",
       //   cell: (info) => info.getValue(),
       // }),
-      columnHelper.accessor("report", {
+      columnHelper.accessor("created_at", {
         header: "Report",
         cell: (info) => info.getValue(),
       }),

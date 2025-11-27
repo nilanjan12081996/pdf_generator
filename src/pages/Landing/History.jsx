@@ -1,66 +1,67 @@
-import { createColumnHelper } from "@tanstack/react-table";
+import {  useReactTable,
+  getCoreRowModel,
+  flexRender,
+  createColumnHelper } from "@tanstack/react-table";
+import { useEffect, useMemo, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getHistory } from "../../reducers/GenaretePdfSlice";
 
-const columnHelper = createColumnHelper();
 
-const defaultData = [
-  {
-    id: 1,
-    report: "Product A",
-    download_report: "Download",
-    date: "2025-01-01",
-  },
-  {
-    id: 2,
-    report: "Product B",
-    download_report: "Download",
-    date: "2025-01-05",
-  },
-];
+
+
 
 const History=()=>{
-     const data = useMemo(() => defaultData, []);
-      const columns = useMemo(
-        () => [
-          // columnHelper.accessor("id", {
-          //   header: "ID",
-          //   cell: (info) => info.getValue(),
-          // }),
-          columnHelper.accessor("report", {
-            header: "Report",
-            cell: (info) => info.getValue(),
-          }),
-          columnHelper.accessor("date", {
-            header: "Date",
-            cell: (info) => info.getValue(),
-          }),
-          columnHelper.accessor("download_report", {
-            header: "Download Report",
-            cell: (info) => (
-              <span
-                className={`px-2 py-1 rounded text-white cursor-pointer ${"bg-green-600"
-                  }`}
-              >
-                {info.getValue()}
-              </span>
-            ),
-          }),
-    
-        ],
-        []
-      );
-    
-      const table = useReactTable({
-        data,
-        columns,
-        getCoreRowModel: getCoreRowModel(),
-      });
-    
+    const{allHist}=useSelector((state)=>state?.generatePdf)
+   const dispatch = useDispatch();
+    const columnHelper = createColumnHelper();
+      const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const [paginationData, setPaginationData] = useState({
+    total: 0,
+    pages: 0,
+    page: 1,
+    limit: 10
+  });
+  useEffect(()=>{
+    dispatch(getHistory({
+        page:currentPage,
+        limit:pageSize
+    })).unwrap().then((res)=>{
+        if(res?.status_code===200){
+            setPaginationData(res.pagination);
+        }
+    })
+  },[dispatch,currentPage, pageSize])
+
+  const columns = useMemo(() => [
+ 
+
+    columnHelper.accessor("created_at", {
+      cell: (info) => <span>{info.getValue()}</span>,
+      header: "Date",
+    }),
+
+ 
+
+    columnHelper.accessor("phone", {
+      cell: (info) => <span>{info.getValue()}</span>,
+      header: "Phone",
+    }),
+
+   
+
+
+   
+
+
+
+  ]);
     return(
         <>
          <div className="lg:pt-0">
          
                 <div className="lg:w-8/12 mx-auto border rounded-lg shadow p-4 mb-20">
-                  <table className="w-full border-collapse">
+                  {/* <table className="w-full border-collapse">
                     <thead className="bg-gray-100">
                       {table.getHeaderGroups().map((headerGroup) => (
                         <tr key={headerGroup.id}>
@@ -93,7 +94,7 @@ const History=()=>{
                         </tr>
                       ))}
                     </tbody>
-                  </table>
+                  </table> */}
                 </div>
               </div>
         </>
