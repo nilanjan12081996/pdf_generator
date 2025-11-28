@@ -23,6 +23,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { checkPdfStatus, generatePDF, historyGenerate, reportGenerate } from "../../reducers/GenaretePdfSlice";
 import { FaFilePdf } from "react-icons/fa";
+import Loader from "../../components/Loader";
 
 const columnHelper = createColumnHelper();
 
@@ -86,21 +87,133 @@ const Landing = () => {
     getCoreRowModel: getCoreRowModel(),
   });
 
+//  const parseReportToSections = (reportString) => {
+//   if (!reportString) return [];
+//   const lines = reportString.split("\n").map(line => line.trim());
+//   const sections = [];
+//   let currentSection = { title: "General", content: [], list: [] };
+
+//   lines.forEach(line => {
+//     if (!line) return;
+//     line = line.replace(/\*\*/g, "");
+
+//     // detect section headers: ## or ###
+//     if (line.startsWith("## ") || line.startsWith("### ")) {
+//       if (currentSection.content.length || currentSection.list.length) sections.push(currentSection);
+//       currentSection = { title: line.replace(/^##+ /, ""), content: [], list: [] };
+//     }
+//     // detect unordered list
+//     else if (line.startsWith("- ")) {
+//       currentSection.list.push(line.replace("- ", ""));
+//     }
+//     // detect numbered list
+//     else if (/^\d+\.\s/.test(line)) {
+//       currentSection.list.push(line.replace(/^\d+\.\s/, ""));
+//     }
+//     else {
+//       currentSection.content.push(line);
+//     }
+//   });
+
+//   if (currentSection.content.length || currentSection.list.length) sections.push(currentSection);
+//   return sections;
+// };
+
+const parseReportToSections = (reportString) => {
+  if (!reportString) return [];
+  const lines = reportString.split("\n").map(line => line.trim());
+
+  const sections = [];
+  let currentSection = null; 
+
+  lines.forEach(line => {
+    if (!line) return;
+
+    line = line.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+
+    if (line.startsWith("## ") || line.startsWith("### ")) {
+      const title = line.replace(/^##+ /, "").trim();
+      currentSection = { title, content: [], list: [] };
+      sections.push(currentSection);
+      return;
+    }
+
+    if (line.startsWith("- ")) {
+      if (!currentSection) return;
+      currentSection.list.push(line.replace("- ", ""));
+      return;
+    }
+
+    if (/^\d+\.\s/.test(line)) {
+      if (!currentSection) return;
+      currentSection.list.push(line.replace(/^\d+\.\s/, ""));
+      return;
+    }
+
+    if (line.length > 0) {
+      if (!currentSection) return; 
+      currentSection.content.push(line);
+    }
+  });
+
+  return sections;
+};
+
+
+
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
+
+
   const onSubmit = (data) => {
     setSubmitLoading(true);
     dispatch(reportGenerate(data)).then((res) => {
       console.log("res", res);
+      const pdfData = res.payload.pdf_data;
+      console.log("Page1 report string:", pdfData.page1.report);
+
+      const structuredPdfData = {
+
+        page1: {
+          headline: pdfData.page1.hedline,
+          sections: parseReportToSections(pdfData.page1.report)
+        },
+        page2: {
+          headline: pdfData.page2.hedline,
+          sections: parseReportToSections(pdfData.page2.report)
+        },
+        page3: {
+          headline: pdfData.page3.hedline,
+          sections: parseReportToSections(pdfData.page3.report)
+        },
+        page4: {
+          headline: pdfData.page4.hedline,
+          sections: parseReportToSections(pdfData.page4.report)
+        },
+         page5: {
+          headline: pdfData.page5.hedline,
+          sections: parseReportToSections(pdfData.page5.report)
+        },
+        page6: {
+          headline: pdfData.page6.hedline,
+          sections: parseReportToSections(pdfData.page6.report)
+        },
+         page7: {
+          headline: pdfData.page7.hedline,
+          sections: parseReportToSections(pdfData.page7.report)
+        }
+      };
+
       if (res?.payload?.status_code === 200) {
         const paylaod = {
           document_template_id: "DBFC0971-D020-4765-9768-D445FAE7FA2D",
           status: "pending",
-          payload: res?.payload?.pdf_data
+          payload: structuredPdfData
         }
         dispatch(generatePDF(paylaod))
           .then((res) => {
@@ -117,12 +230,12 @@ const Landing = () => {
                       preview_url: res?.payload?.preview_url
                     }))
                   }
-                   setSubmitLoading(false);
+                  setSubmitLoading(false);
                 });
             }, 5000);
           })
-      }else{
-        setSubmitLoading(false); 
+      } else {
+        setSubmitLoading(false);
       }
 
     })
@@ -130,7 +243,7 @@ const Landing = () => {
   return (
     <>
 
-
+  {submitLoading && <Loader />} 
       <div className="lg:pt-0">
         {/* <div className="bg-[#f9f9f9] mb-6 border-t border-[#c7c7c7] border-b py-3">
         <div className="lg:flex justify-center items-center gap-2 text-center px-4 lg:px-0">
